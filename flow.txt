@@ -1,0 +1,4 @@
+1. Field to enter the Job Description 
+2. Upload PDF
+3. PDF to Image processing --> Google Gemini
+4. Prompts Template creation [Multiple Prompts]

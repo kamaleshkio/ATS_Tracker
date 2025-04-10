@@ -28,7 +28,9 @@ def convert_pdf_to_images(pdf_file):
 input_prompt1 = """
 Hey Act Like a skilled or very experience ATS(Application Tracking System)
 with a deep understanding of tech field,software engineering,data science ,data analyst
-and big data engineer. Your task is to evaluate the resume based on the given job description.
+and big data engineer.
+
+Your task is to evaluate the resume based on the given job description.
 You must consider the job market is very competitive and you should provide 
 best assistance for improving thr resumes. Assign the percentage Matching based 
 on Jd and
@@ -37,24 +39,28 @@ Here is the file, resume:{text}
 description:{jd}
 
 I want the response in one single string having the structure
-{{"JD Match":"%","MissingKeywords:[]","Profile Summary":""}}
+{{"JD Match":"%",
+
+"MissingKeywords:[]",
+
+"Profile Summary":""}}
 """
 
-# input_prompt2 = """
-# You are an skilled ATS (Applicant Tracking System) scanner with a deep understanding of data science and ATS functionality, 
-# here is the job description - {jd}, Here is the resume - {text}.
+input_prompt2 = """
+You are an skilled ATS (Applicant Tracking System) scanner with a deep understanding of data science and ATS functionality, 
+here is the job description - {jd}, Here is the resume - {text}.
 
-# your task is to evaluate the resume against the provided job description. give me the percentage of match if the resume matches
-# the job description. First the output should come as percentage and then keywords missing and last final thoughts.
+your task is to evaluate the resume against the provided job description. give me the percentage of match if the resume matches
+the job description. First the output should come as percentage and then keywords missing and last final thoughts.
 
-# """
+"""
 
-# input_prompt3 = """
-# you are an experienced exper in the specified field, 
-# here is the job description - {jd}, Here is the resume - {text}.
-# your task is to provide the suggestion to the candidate to improve 
-# his resume and the skills they should focus on the specific skills field
-# """
+input_prompt3 = """
+you are an experienced exper in the specified field, 
+here is the job description - {jd}, Here is the resume - {text}.
+your task is to provide the suggestion to the candidate to improve 
+his resume and the skills they should focus on the specific skills field
+"""
 st.title("smart AI for Application Tracking System Resume Analyzer")
 st.text("Improve your resume by scanning this PDF and providing the required information.")
 jd = st.text_area("Paste your job description here")
@@ -65,36 +71,39 @@ if uploaded_file:
 
 submit1 = st.button("Analyze")
 
-#submit2 = st.button("get the percentage of match")
+submit2 = st.button("get the percentage of match")
 
-#submit3 = st.button("Here are the suggestions to improve your resume")
+submit3 = st.button("Here are the suggestions to improve your resume")
 
 if submit1:
     if uploaded_file is not None:
         text = convert_pdf_to_images(uploaded_file)
-        response = get_gemini_response(input_prompt1)
+        filled_prompt = input_prompt1.format(text=text, jd=jd)
+        response = get_gemini_response(filled_prompt)
 
         st.subheader(response)
         
     else:
         st.write("Please upload a PDF file to analyze.")
 
-# elif submit2:
-#     if uploaded_file is not None:
-#         text = convert_pdf_to_images(uploaded_file)
-#         response = get_gemini_response( input_prompt2)
+elif submit2:
+    if uploaded_file is not None:
+        text = convert_pdf_to_images(uploaded_file)
+        filled_prompt = input_prompt2.format(text=text, jd=jd)
+        response = get_gemini_response( filled_prompt)
 
-#         st.subheader("Response")
-#         st.write(response)
-#     else:
-#         st.write("Please upload a PDF file to analyze.")
+        st.subheader("Response")
+        st.write(response)
+    else:
+        st.write("Please upload a PDF file to analyze.")
 
-# elif submit3:
-#     if uploaded_file is not None:
-#         text = convert_pdf_to_images(uploaded_file)
-#         response = get_gemini_response(input_prompt3)
+elif submit3:
+    if uploaded_file is not None:
+        text = convert_pdf_to_images(uploaded_file)
+        filled_prompt = input_prompt3.format(text=text, jd=jd)
+        response = get_gemini_response(filled_prompt)
 
-#         st.subheader("Response")
-#         st.write(response)
-#     else:
-#         st.write("Please upload a PDF file to analyze.")
+        st.subheader("Response")
+        st.write(response)
+    else:
+        st.write("Please upload a PDF file to analyze.")

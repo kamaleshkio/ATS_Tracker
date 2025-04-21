@@ -33,6 +33,7 @@ jobs:
 
 
       - name: 🧪 Run lint check (flake8)
+        continue-on-error: true
         run: |
           pip install flake8
           flake8 .

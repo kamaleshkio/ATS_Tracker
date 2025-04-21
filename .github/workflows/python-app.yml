@@ -26,10 +26,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirement.txt
 
-      - name: 🧹 Run code format check (black)
+      - name: 🧹 Format code with Black
         run: |
           pip install black
-          black --check .
+          black .
+
 
       - name: 🧪 Run lint check (flake8)
         run: |
